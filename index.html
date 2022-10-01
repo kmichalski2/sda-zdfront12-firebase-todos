@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TO-DO list app</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-dark bg-dark">
+      <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1">TO-DO List</span>
+      </div>
+    </nav>
+
+    <div class="container">
+      <ul class="list-group mt-2 mt-md-5 mb-4" id="tasksList"></ul>
+
+      <form id="addForm">
+        <div class="mb-3">
+          <label for="name" class="form-label">Name:</label>
+          <input
+            type="text"
+            name="name"
+            class="form-control"
+            placeholder="Enter name of the task"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="deadline" class="form-label">Deadline:</label>
+          <input type="date" class="form-control" name="deadline" />
+        </div>
+        <div class="mb-3">
+          <button type="submit" class="btn btn-success">Add</button>
+        </div>
+      </form>
+    </div>
+
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>

@@ -14,6 +14,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { initAddForm } from "./add";
+import { handleDeleteButtons } from "./delete";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBLFZmEdxZhqVE5pC9IPMJbEg4kPYKOCb4",
@@ -68,21 +69,11 @@ getDocs(tasksCollection).then((snapshot) => {
   // Wyodrębnij funkcjonalność usuwania do osobnej funkcji
   // Umieść nową funkcję w module delete.js
 
-  const deleteButtons = document.querySelectorAll(".btn-delete");
+  handleDeleteButtons(db);
 
-  deleteButtons.forEach((button) => {
-    button.addEventListener("click", (event) => {
-      const taskId = event.target.dataset.delete;
-
-      const docRef = doc(db, "tasks", taskId);
-
-      deleteDoc(docRef).then(() => {
-        const buttonElement = event.target;
-
-        buttonElement.parentNode.parentNode.remove();
-      });
-    });
-  });
+  // Zadanie 2 : Stwórz nowy moduł ( plik ) done.js
+  // Wyodrębnij funkcjonalność usuwania do osobnej funkcji
+  // Umieść nową funkcję w module done.js
 
   const doneButtons = document.querySelectorAll(".btn-done");
 

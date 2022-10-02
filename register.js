@@ -1,4 +1,6 @@
-export const initRegisterForm = () => {
+import { createUserWithEmailAndPassword } from "firebase/auth";
+
+export const initRegisterForm = (auth) => {
   const registerForm = document.querySelector("#registerForm");
 
   if (registerForm) {
@@ -7,6 +9,15 @@ export const initRegisterForm = () => {
 
     registerForm.addEventListener("submit", (event) => {
       event.preventDefault();
+
+      const formData = new FormData(registerForm);
+
+      const email = formData.get("email");
+      const password = formData.get("password");
+
+      createUserWithEmailAndPassword(auth, email, password).then((result) => {
+        console.log("User has been created!");
+      });
     });
   }
 };

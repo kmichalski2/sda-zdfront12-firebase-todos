@@ -7,8 +7,8 @@ export const initList = (db, tasksCollection) => {
     const documentsData = snapshot.docs;
 
     renderTasksList(documentsData);
-    handleDeleteButtons(db);
     handleDoneButtons(db);
+    handleDeleteButtons(db);
   });
 };
 

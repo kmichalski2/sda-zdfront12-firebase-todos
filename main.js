@@ -29,13 +29,15 @@ if (signOutButton) {
 }
 
 onAuthStateChanged(auth, (user) => {
-  // Zadanie 1
-
   if (user) {
     initList(db, tasksCollection);
     initAddForm(tasksCollection);
   } else {
-    console.log("Nie jestes zalogowany");
+    const allowedUrls = ["/register.html", "/login.html"];
+
+    if (!allowedUrls.includes(window.location.pathname)) {
+      window.location.href = window.location.origin + "/login.html";
+    }
   }
 });
 

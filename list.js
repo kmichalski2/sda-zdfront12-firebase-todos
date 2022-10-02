@@ -3,18 +3,20 @@ import { handleDeleteButtons } from "./delete";
 import { handleDoneButtons } from "./done";
 
 export const initList = (db, tasksCollection) => {
-  getDocs(tasksCollection).then((snapshot) => {
-    const documentsData = snapshot.docs;
-
-    renderTasksList(documentsData);
-    handleDoneButtons(db);
-    handleDeleteButtons(db);
-  });
-};
-
-const renderTasksList = (documentsData) => {
   const tasksList = document.getElementById("tasksList");
 
+  if (tasksList) {
+    getDocs(tasksCollection).then((snapshot) => {
+      const documentsData = snapshot.docs;
+
+      renderTasksList(tasksList, documentsData);
+      handleDoneButtons(db);
+      handleDeleteButtons(db);
+    });
+  }
+};
+
+const renderTasksList = (tasksList, documentsData) => {
   documentsData.forEach((doc) => {
     const task = doc.data();
     const taskId = doc.id;

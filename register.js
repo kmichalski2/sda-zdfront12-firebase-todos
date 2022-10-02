@@ -15,9 +15,29 @@ export const initRegisterForm = (auth) => {
       const email = formData.get("email");
       const password = formData.get("password");
 
-      createUserWithEmailAndPassword(auth, email, password).then((result) => {
-        console.log("User has been created!");
-      });
+      const alerts = document.querySelector("#alerts");
+      alerts.innerHTML = "";
+
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((result) => {
+          const alert = document.createElement("div");
+          alert.classList.add("alert", "alert-success");
+          alert.innerHTML = `User has been created!`;
+          alerts.appendChild(alert);
+        })
+        .catch((error) => {
+          const alert = document.createElement("div");
+          alert.classList.add("alert", "alert-danger");
+
+          if (error.code === "auth/email-already-in-use") {
+            alert.innerHTML = "This address e-mail is already in use.";
+          }
+
+          if (error.code === "auth/weak-password") {
+            alert.innerHTML = "Password should be at least 6 characters.";
+          }
+          alerts.appendChild(alert);
+        });
     });
   }
 };

@@ -40,10 +40,10 @@ const renderTasksList = (tasksList, documentsData) => {
     const formattedDeadline = task.deadline.toDate().toLocaleDateString();
 
     const doneButton = `<button data-done="${taskId}" class="btn btn-primary btn-done">${
-      task.done ? "Undone" : "Done"
+      task.done ? "Undone" : `<i class="bi bi-check2-square"></i>`
     }</button>`;
 
-    const deleteButton = `<button data-delete="${taskId}" class="btn btn-warning btn-delete">Delete</button>`;
+    const deleteButton = `<button data-delete="${taskId}" class="btn btn-warning btn-delete"><i class="bi bi-trash-fill"></i></button>`;
 
     li.innerHTML = `<span><strong>${task.name}</strong> (${formattedDeadline})</span> <span class="btn-group">${doneButton}${deleteButton}</span>`;
 

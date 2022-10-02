@@ -1,4 +1,9 @@
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  FacebookAuthProvider,
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from "firebase/auth";
 
 export const initLoginForm = (auth) => {
   const loginForm = document.querySelector("#loginForm");
@@ -26,7 +31,35 @@ export const initLoginForm = (auth) => {
           )}</div>`;
         });
     });
+
+    initSignItWithGoogle(auth);
   }
+};
+
+const initSignItWithGoogle = (auth) => {
+  const signInButton = document.querySelector("#signInWithGoogleButton");
+
+  const signInButtonWithFacebook = document.querySelector(
+    "#signInWithFacebookButton"
+  );
+
+  signInButtonWithFacebook.addEventListener("click", (event) => {
+    signInWithProvider(auth, new FacebookAuthProvider(), event);
+  });
+
+  if (signInButton) {
+    signInButton.addEventListener("click", (event) => {
+      signInWithProvider(auth, new GoogleAuthProvider(), event);
+    });
+  }
+};
+
+const signInWithProvider = (auth, provider, event) => {
+  event.preventDefault();
+
+  signInWithPopup(auth, provider).then((result) => {
+    window.location.href = window.location.origin;
+  });
 };
 
 const getErrorMessage = (error) => {

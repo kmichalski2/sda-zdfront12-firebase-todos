@@ -1,5 +1,6 @@
 import "./style.css";
 import "./node_modules/bootstrap/dist/css/bootstrap.min.css";
+import "./node_modules/bootstrap-icons/font/bootstrap-icons.css";
 
 import { initializeApp } from "firebase/app";
 import { collection, getFirestore } from "firebase/firestore";

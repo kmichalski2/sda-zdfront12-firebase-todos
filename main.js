@@ -15,6 +15,7 @@ import {
 } from "firebase/firestore";
 import { initAddForm } from "./add";
 import { handleDeleteButtons } from "./delete";
+import { handleDoneButtons } from "./done";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBLFZmEdxZhqVE5pC9IPMJbEg4kPYKOCb4",
@@ -30,6 +31,9 @@ const db = getFirestore(app);
 const tasksCollection = collection(db, "tasks");
 
 const tasksList = document.getElementById("tasksList");
+
+// Zadanie 3: Utwórz moduł list, który będzie odpowiedzialny
+// za wyswietlanie listy zadań
 
 getDocs(tasksCollection).then((snapshot) => {
   const documentsData = snapshot.docs;
@@ -49,8 +53,6 @@ getDocs(tasksCollection).then((snapshot) => {
     if (task.done) {
       li.classList.add("task-done");
     }
-
-    console.log(task);
 
     const formattedDeadline = task.deadline.toDate().toLocaleDateString();
 
@@ -74,26 +76,7 @@ getDocs(tasksCollection).then((snapshot) => {
   // Zadanie 2 : Stwórz nowy moduł ( plik ) done.js
   // Wyodrębnij funkcjonalność usuwania do osobnej funkcji
   // Umieść nową funkcję w module done.js
-
-  const doneButtons = document.querySelectorAll(".btn-done");
-
-  doneButtons.forEach((button) => {
-    button.addEventListener("click", (event) => {
-      const taskId = event.target.dataset.done;
-
-      const docRef = doc(db, "tasks", taskId);
-
-      getDoc(docRef).then((doc) => {
-        const isDone = doc.data().done;
-
-        updateDoc(docRef, {
-          done: !isDone,
-        }).then(() => {
-          console.log("Task has been done");
-        });
-      });
-    });
-  });
+  handleDoneButtons(db);
 });
 
 initAddForm(tasksCollection);

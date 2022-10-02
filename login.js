@@ -18,6 +18,7 @@ export const initLoginForm = (auth) => {
         .then((result) => {
           const message = "Login successful";
           alerts.innerHTML = `<div class="alert alert-success">${message}</div>`;
+          window.location.href = window.location.origin;
         })
         .catch((error) => {
           alerts.innerHTML = `<div class="alert alert-danger">${getErrorMessage(

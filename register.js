@@ -24,6 +24,7 @@ export const initRegisterForm = (auth) => {
           alert.classList.add("alert", "alert-success");
           alert.innerHTML = `User has been created!`;
           alerts.appendChild(alert);
+          window.location.href = window.location.origin;
         })
         .catch((error) => {
           const alert = document.createElement("div");

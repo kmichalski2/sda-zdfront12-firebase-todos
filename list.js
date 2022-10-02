@@ -6,13 +6,17 @@ export const initList = (db, tasksCollection) => {
   const tasksList = document.getElementById("tasksList");
 
   if (tasksList) {
-    getDocs(tasksCollection).then((snapshot) => {
-      const documentsData = snapshot.docs;
+    getDocs(tasksCollection)
+      .then((snapshot) => {
+        const documentsData = snapshot.docs;
 
-      renderTasksList(tasksList, documentsData);
-      handleDoneButtons(db);
-      handleDeleteButtons(db);
-    });
+        renderTasksList(tasksList, documentsData);
+        handleDoneButtons(db);
+        handleDeleteButtons(db);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
   }
 };
 

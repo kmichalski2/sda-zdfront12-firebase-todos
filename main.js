@@ -41,5 +41,8 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
+initList(db, tasksCollection);
+initAddForm(tasksCollection);
+
 initRegisterForm(auth);
 initLoginForm(auth);

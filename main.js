@@ -13,6 +13,7 @@ import {
   Timestamp,
   updateDoc,
 } from "firebase/firestore";
+import { initAddForm } from "./add";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBLFZmEdxZhqVE5pC9IPMJbEg4kPYKOCb4",
@@ -48,6 +49,8 @@ getDocs(tasksCollection).then((snapshot) => {
       li.classList.add("task-done");
     }
 
+    console.log(task);
+
     const formattedDeadline = task.deadline.toDate().toLocaleDateString();
 
     const doneButton = `<button data-done="${taskId}" class="btn btn-primary btn-done">${
@@ -61,6 +64,10 @@ getDocs(tasksCollection).then((snapshot) => {
     tasksList.appendChild(li);
   });
 
+  // Zadanie 1 : Stwórz nowy moduł ( plik ) delete.js
+  // Wyodrębnij funkcjonalność usuwania do osobnej funkcji
+  // Umieść nową funkcję w module delete.js
+
   const deleteButtons = document.querySelectorAll(".btn-delete");
 
   deleteButtons.forEach((button) => {
@@ -72,7 +79,7 @@ getDocs(tasksCollection).then((snapshot) => {
       deleteDoc(docRef).then(() => {
         const buttonElement = event.target;
 
-        buttonElement.parentNode.remove();
+        buttonElement.parentNode.parentNode.remove();
       });
     });
   });
@@ -98,24 +105,4 @@ getDocs(tasksCollection).then((snapshot) => {
   });
 });
 
-const addForm = document.querySelector("#addForm");
-
-addForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-
-  const formData = new FormData(addForm);
-
-  const deadlineDate = new Date(formData.get("deadline"));
-  const deadlineTimestamp = Timestamp.fromDate(deadlineDate);
-
-  const newTask = {
-    name: formData.get("name"),
-    deadline: deadlineTimestamp,
-    done: false,
-    startTime: formData.get("startTime"),
-  };
-
-  addDoc(tasksCollection, newTask).then((data) => {
-    console.log("Task has been added!");
-  });
-});
+initAddForm(tasksCollection);

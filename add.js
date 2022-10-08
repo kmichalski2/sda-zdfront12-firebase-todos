@@ -1,5 +1,5 @@
 import { Timestamp, addDoc } from "firebase/firestore";
-import { ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 export const initAddForm = (tasksCollection, userId, storage) => {
   const addForm = document.querySelector("#addForm");
@@ -16,24 +16,25 @@ export const initAddForm = (tasksCollection, userId, storage) => {
 
       const file = formData.get("attachment");
 
-      const fileRef = ref(storage, "attachments/" + file.name);
+      const fileRef = ref(storage, "attachments/" + task.id + ".jpg");
       uploadBytes(fileRef, file)
         .then((result) => {
-          console.log("Obrazek został dodany");
+          getDownloadURL(result.ref).then((url) => {
+            const newTask = {
+              order: 999999,
+              name: formData.get("name"),
+              deadline: deadlineTimestamp,
+              done: false,
+              startTime: formData.get("startTime"),
+              userId: userId,
+              filePath: result.metadata.fullPath,
+              fileUrl: url,
+            };
 
-          const newTask = {
-            order: 999999,
-            name: formData.get("name"),
-            deadline: deadlineTimestamp,
-            done: false,
-            startTime: formData.get("startTime"),
-            userId: userId,
-            filePath: result.metadata.fullPath,
-          };
-
-          addDoc(tasksCollection, newTask).then((data) => {
-            console.log("Task has been added!");
-            addFormModal.hide();
+            addDoc(tasksCollection, newTask).then((data) => {
+              console.log("Task has been added!");
+              addFormModal.hide();
+            });
           });
         })
         .catch((error) => {

@@ -1,7 +1,6 @@
 import { onSnapshot, query, where } from "firebase/firestore";
 import { handleDeleteButtons } from "./delete";
 import { handleDoneButtons } from "./done";
-import { handleAttachmentButtons } from "./attachment";
 
 export const initList = (db, tasksCollection, userId) => {
   const tasksList = document.getElementById("tasksList");
@@ -15,7 +14,6 @@ export const initList = (db, tasksCollection, userId) => {
       renderTasksList(tasksList, documentsData);
       handleDoneButtons(db);
       handleDeleteButtons(db);
-      handleAttachmentButtons();
     });
   }
 };
@@ -51,11 +49,19 @@ const renderTasksList = (tasksList, documentsData) => {
           : `<i class="bi bi-check2-square"></i>`
       }</button>`;
 
+      console.log(task.fileUrl);
+
       const deleteButton = `<button data-delete="${taskId}" class="btn btn-warning btn-delete"><i class="bi bi-trash-fill"></i></button>`;
 
-      const attachmentButton = `<button class="btn btn-light" data-attachment="${task.filePath}"><i class="bi bi-paperclip"></i></button>`;
+      const attachmentButton = `<a class="btn btn-light" href="${task.fileUrl}" target="_blank"><i class="bi bi-paperclip"></i></a>`;
 
-      li.innerHTML = `<span><strong>${task.name}</strong> (${formattedDeadline})</span> <span class="btn-group">${doneButton}${deleteButton}${attachmentButton}</span>`;
+      // const image = `<img src=${task.fileUrl} class="w-25 img img-thumbnail">`;
+
+      li.innerHTML = `<span><strong>${
+        task.name
+      }</strong> (${formattedDeadline})</span> <span class="btn-group">${doneButton}${deleteButton}${
+        task.filePath ? attachmentButton : ""
+      }</span>`;
 
       tasksList.appendChild(li);
     });

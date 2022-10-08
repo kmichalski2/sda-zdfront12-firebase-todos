@@ -1,6 +1,6 @@
 import { Timestamp, addDoc } from "firebase/firestore";
 
-export const initAddForm = (tasksCollection) => {
+export const initAddForm = (tasksCollection, userId) => {
   const addForm = document.querySelector("#addForm");
   const addFormModal = new bootstrap.Modal("#addTaskModal");
 
@@ -19,6 +19,7 @@ export const initAddForm = (tasksCollection) => {
         deadline: deadlineTimestamp,
         done: false,
         startTime: formData.get("startTime"),
+        userId: userId,
       };
 
       addDoc(tasksCollection, newTask).then((data) => {

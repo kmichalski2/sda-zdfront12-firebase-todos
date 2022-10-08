@@ -6,6 +6,7 @@ import "./node_modules/bootstrap-icons/font/bootstrap-icons.css";
 import { initializeApp } from "firebase/app";
 import { collection, getFirestore } from "firebase/firestore";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { getStorage } from "firebase/storage";
 import { initAddForm } from "./add";
 import { initList } from "./list";
 import { firebaseConfig } from "./config";
@@ -15,6 +16,7 @@ import { initLoginForm } from "./login";
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
+const storage = getStorage(app);
 
 const tasksCollection = collection(db, "tasks");
 
@@ -33,7 +35,7 @@ if (signOutButton) {
 onAuthStateChanged(auth, (user) => {
   if (user) {
     initList(db, tasksCollection, user.uid);
-    initAddForm(tasksCollection, user.uid);
+    initAddForm(tasksCollection, user.uid, storage);
   } else {
     const allowedUrls = ["/register.html", "/login.html"];
 

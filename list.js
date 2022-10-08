@@ -13,8 +13,6 @@ export const initList = (db, tasksCollection, userId) => {
   const tasksList = document.getElementById("tasksList");
 
   if (tasksList) {
-    // tasksCollection - query : Daj mi wszystkie zadania
-    console.log(userId);
     const tasksQuery = query(tasksCollection, where("userId", "==", userId));
 
     onSnapshot(tasksQuery, (querySnapshot) => {

@@ -1,4 +1,4 @@
-import { getDocs } from "firebase/firestore";
+import { getDocs, orderBy, query } from "firebase/firestore";
 import { handleDeleteButtons } from "./delete";
 import { handleDoneButtons } from "./done";
 
@@ -6,7 +6,10 @@ export const initList = (db, tasksCollection) => {
   const tasksList = document.getElementById("tasksList");
 
   if (tasksList) {
-    getDocs(tasksCollection)
+    // tasksCollection - query : Daj mi wszystkie zadania
+    const tasksQuery = query(tasksCollection, orderBy("order"));
+
+    getDocs(tasksQuery)
       .then((snapshot) => {
         const documentsData = snapshot.docs;
 
@@ -34,13 +37,15 @@ const renderTasksList = (tasksList, documentsData) => {
     );
 
     if (task.done) {
-      li.classList.add("task-done");
+      li.classList.add("list-group-item-dark");
     }
 
     const formattedDeadline = task.deadline.toDate().toLocaleDateString();
 
     const doneButton = `<button data-done="${taskId}" class="btn btn-primary btn-done">${
-      task.done ? "Undone" : `<i class="bi bi-check2-square"></i>`
+      task.done
+        ? `<i class="bi bi-backspace"></i>`
+        : `<i class="bi bi-check2-square"></i>`
     }</button>`;
 
     const deleteButton = `<button data-delete="${taskId}" class="btn btn-warning btn-delete"><i class="bi bi-trash-fill"></i></button>`;

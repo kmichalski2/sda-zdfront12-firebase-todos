@@ -33,7 +33,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form id="addForm">
+            <form id="addForm" validate>
               <div class="mb-3">
                 <label for="name" class="form-label">Name:</label>
                 <input
@@ -41,11 +41,12 @@
                   name="name"
                   class="form-control"
                   placeholder="Enter name of the task"
+                  required
                 />
               </div>
               <div class="mb-3">
                 <label for="deadline" class="form-label">Deadline:</label>
-                <input type="date" class="form-control" name="deadline" />
+                <input type="date" class="form-control" name="deadline" required />
               </div>
               <div class="mb-3">
                 <label for="attachment" class="form-label">Attachment:</label>

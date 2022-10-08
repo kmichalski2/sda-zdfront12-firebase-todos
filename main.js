@@ -35,7 +35,6 @@ if (signOutButton) {
 onAuthStateChanged(auth, (user) => {
   if (user) {
     initList(db, tasksCollection, user.uid, storage);
-    initAddForm(tasksCollection, user.uid, storage);
   } else {
     const allowedUrls = ["/register.html", "/login.html"];
 

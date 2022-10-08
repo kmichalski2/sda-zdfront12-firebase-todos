@@ -1,6 +1,7 @@
 import { onSnapshot, query, where } from "firebase/firestore";
 import { handleDeleteButtons } from "./delete";
 import { handleDoneButtons } from "./done";
+import { initAddForm } from "./add";
 
 export const initList = (db, tasksCollection, userId, storage) => {
   const tasksList = document.getElementById("tasksList");
@@ -12,6 +13,7 @@ export const initList = (db, tasksCollection, userId, storage) => {
       const documentsData = querySnapshot.docs;
 
       renderTasksList(tasksList, documentsData);
+      initAddForm(tasksCollection, userId, storage, documentsData.length);
       handleDoneButtons(db);
       handleDeleteButtons(db, storage);
     });

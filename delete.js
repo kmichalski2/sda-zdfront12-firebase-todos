@@ -5,14 +5,12 @@ export const handleDeleteButtons = (db) => {
 
   deleteButtons.forEach((button) => {
     button.addEventListener("click", (event) => {
-      const taskId = event.target.dataset.delete;
+      const taskId = event.currentTarget.dataset.delete;
 
       const docRef = doc(db, "tasks", taskId);
 
       deleteDoc(docRef).then(() => {
-        const buttonElement = event.target;
-
-        buttonElement.parentNode.parentNode.remove();
+        console.log("Zadanie zostało usunięte");
       });
     });
   });

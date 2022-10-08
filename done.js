@@ -5,7 +5,7 @@ export const handleDoneButtons = (db) => {
 
   doneButtons.forEach((button) => {
     button.addEventListener("click", (event) => {
-      const taskId = event.target.dataset.done;
+      const taskId = event.currentTarget.dataset.done;
 
       const docRef = doc(db, "tasks", taskId);
 

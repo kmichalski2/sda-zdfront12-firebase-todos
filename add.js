@@ -2,12 +2,10 @@ import { Timestamp, addDoc } from "firebase/firestore";
 
 export const initAddForm = (tasksCollection) => {
   const addForm = document.querySelector("#addForm");
-  const submitAddFormButton = document.querySelector("#submitAddFormButton");
-  // const addFormModal = document.querySelector("#addTaskModal");
   const addFormModal = new bootstrap.Modal("#addTaskModal");
 
-  if (addForm && submitAddFormButton && addFormModal) {
-    submitAddFormButton.addEventListener("click", (event) => {
+  if (addForm && addFormModal) {
+    addForm.addEventListener("submit", (event) => {
       event.preventDefault();
 
       const formData = new FormData(addForm);

@@ -1,4 +1,4 @@
-import { getDocs, orderBy, query } from "firebase/firestore";
+import { getDocs, onSnapshot, orderBy, query } from "firebase/firestore";
 import { handleDeleteButtons } from "./delete";
 import { handleDoneButtons } from "./done";
 
@@ -9,21 +9,19 @@ export const initList = (db, tasksCollection) => {
     // tasksCollection - query : Daj mi wszystkie zadania
     const tasksQuery = query(tasksCollection, orderBy("order"));
 
-    getDocs(tasksQuery)
-      .then((snapshot) => {
-        const documentsData = snapshot.docs;
+    onSnapshot(tasksQuery, (querySnapshot) => {
+      const documentsData = querySnapshot.docs;
 
-        renderTasksList(tasksList, documentsData);
-        handleDoneButtons(db);
-        handleDeleteButtons(db);
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
+      renderTasksList(tasksList, documentsData);
+      handleDoneButtons(db);
+      handleDeleteButtons(db);
+    });
   }
 };
 
 const renderTasksList = (tasksList, documentsData) => {
+  tasksList.innerHTML = "";
+
   documentsData.forEach((doc) => {
     const task = doc.data();
     const taskId = doc.id;

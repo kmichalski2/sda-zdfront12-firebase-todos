@@ -16,7 +16,8 @@ export const initAddForm = (tasksCollection, userId, storage) => {
 
       const file = formData.get("attachment");
 
-      const fileRef = ref(storage, "attachments/" + task.id + ".jpg");
+      const fileRef = ref(storage, "attachments/" + file.name);
+
       uploadBytes(fileRef, file)
         .then((result) => {
           getDownloadURL(result.ref).then((url) => {

@@ -2,9 +2,12 @@ import { Timestamp, addDoc } from "firebase/firestore";
 
 export const initAddForm = (tasksCollection) => {
   const addForm = document.querySelector("#addForm");
+  const submitAddFormButton = document.querySelector("#submitAddFormButton");
+  // const addFormModal = document.querySelector("#addTaskModal");
+  const addFormModal = new bootstrap.Modal("#addTaskModal");
 
-  if (addForm) {
-    addForm.addEventListener("submit", (event) => {
+  if (addForm && submitAddFormButton && addFormModal) {
+    submitAddFormButton.addEventListener("click", (event) => {
       event.preventDefault();
 
       const formData = new FormData(addForm);
@@ -13,6 +16,7 @@ export const initAddForm = (tasksCollection) => {
       const deadlineTimestamp = Timestamp.fromDate(deadlineDate);
 
       const newTask = {
+        order: 999999,
         name: formData.get("name"),
         deadline: deadlineTimestamp,
         done: false,
@@ -21,6 +25,7 @@ export const initAddForm = (tasksCollection) => {
 
       addDoc(tasksCollection, newTask).then((data) => {
         console.log("Task has been added!");
+        addFormModal.hide();
       });
     });
   }

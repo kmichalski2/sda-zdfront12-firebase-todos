@@ -53,7 +53,7 @@ const renderTasksList = (tasksList, documentsData) => {
 
       const deleteButton = `<button data-delete="${taskId}" class="btn btn-warning btn-delete"><i class="bi bi-trash-fill"></i></button>`;
 
-      const attachmentButton = `<button class="btn btn-light btn-attachment"><i class="bi bi-paperclip"></i></button>`;
+      const attachmentButton = `<button class="btn btn-light" data-attachment="${task.filePath}"><i class="bi bi-paperclip"></i></button>`;
 
       li.innerHTML = `<span><strong>${task.name}</strong> (${formattedDeadline})</span> <span class="btn-group">${doneButton}${deleteButton}${attachmentButton}</span>`;
 

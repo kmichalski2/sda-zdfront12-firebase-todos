@@ -1,4 +1,4 @@
-import { Timestamp, addDoc } from "firebase/firestore";
+import { Timestamp, addDoc, getDocs } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 export const initAddForm = (
@@ -32,7 +32,7 @@ export const initAddForm = (
                 deadlineTimestamp,
                 tasksQuantity + 1,
                 userId,
-                fullPath,
+                result.metadata.fullPath,
                 url
               );
 

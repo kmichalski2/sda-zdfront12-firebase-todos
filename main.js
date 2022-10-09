@@ -12,6 +12,7 @@ import { initList } from "./list";
 import { firebaseConfig } from "./config";
 import { initRegisterForm } from "./register";
 import { initLoginForm } from "./login";
+import { initEditForm } from "./edit";
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
@@ -36,6 +37,7 @@ onAuthStateChanged(auth, (user) => {
   if (user) {
     initList(db, tasksCollection, user.uid, storage);
     initAddForm(tasksCollection, user.uid, storage);
+    initEditForm(storage, db);
   } else {
     const allowedUrls = ["/register.html", "/login.html"];
 

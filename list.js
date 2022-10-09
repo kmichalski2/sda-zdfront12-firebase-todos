@@ -1,6 +1,7 @@
 import { onSnapshot, query, where } from "firebase/firestore";
 import { handleDeleteButtons } from "./delete";
 import { handleDoneButtons } from "./done";
+import { handleEditButtons } from "./edit";
 
 export const initList = (db, tasksCollection, userId, storage) => {
   const tasksList = document.getElementById("tasksList");
@@ -14,6 +15,7 @@ export const initList = (db, tasksCollection, userId, storage) => {
       renderTasksList(tasksList, documentsData);
       handleDoneButtons(db);
       handleDeleteButtons(db, storage);
+      handleEditButtons(db);
     });
   }
 };
@@ -55,11 +57,11 @@ const renderTasksList = (tasksList, documentsData) => {
 
       const attachmentButton = `<a class="btn btn-light" href="${task.fileUrl}" target="_blank"><i class="bi bi-paperclip"></i></a>`;
 
-      // const image = `<img src=${task.fileUrl} class="w-25 img img-thumbnail">`;
+      const editButton = `<button class="btn btn-success" data-edit="${taskId}"><i class="bi bi-pencil-fill"></i></button>`;
 
       li.innerHTML = `<span><strong>${
         task.name
-      }</strong> (${formattedDeadline})</span> <span class="btn-group">${doneButton}${deleteButton}${
+      }</strong> (${formattedDeadline})</span> <span class="btn-group">${doneButton}${editButton}${deleteButton}${
         task.filePath ? attachmentButton : ""
       }</span>`;
 
